@@ -120,7 +120,11 @@ function create_window(cmd, opts)
 
         M.float_win = vim.api.nvim_open_win(M.result_buffer, true, win_opts)
     else
-        vim.cmd("vnew gen.nvim")
+        if M.display_mode == "hsplit" then
+            vim.cmd("new gen.nvim")
+        else
+            vim.cmd("vnew gen.nvim")
+        end
         M.result_buffer = vim.fn.bufnr("%")
         M.float_win = vim.fn.win_getid()
         vim.api.nvim_buf_set_option(M.result_buffer, "filetype", "markdown")
